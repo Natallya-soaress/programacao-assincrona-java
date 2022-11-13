@@ -1,4 +1,4 @@
-public class WorkerThread implements Runnable{
+public class WorkerThreadMatriz implements Runnable{
 
     private int linha;
     private int coluna;
@@ -7,7 +7,7 @@ public class WorkerThread implements Runnable{
     private int resultado[][];
     private int checagem[][];
 
-    public WorkerThread(int linha, int coluna, int[][] a, int[][] b, int[][] resultado, int[][] checagem) {
+    public WorkerThreadMatriz(int linha, int coluna, int[][] a, int[][] b, int[][] resultado, int[][] checagem) {
         this.linha = linha;
         this.coluna = coluna;
         this.a = a;
