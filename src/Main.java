@@ -18,11 +18,11 @@ public class Main {
 
         ExecutorService threadPool = Executors.newFixedThreadPool(8);
 
-        for(int i = 0; i < 8; i++){
+        for(int i = 0; i < 20000; i++){
             somador.addAndGet(1);
         }
 
-        for (int i = 0; i < 8; i++) {
+        for (int i = 0; i < 20000; i++) {
             threadPool.execute(new WorkerThreadSomador(somador));
         }
 
@@ -36,7 +36,7 @@ public class Main {
     private static void QuebraSenha() throws Exception {
 
         int i =0, j = 0;
-        final int NUMERO_DE_THREAD = 10;
+        final int NUMERO_DE_THREAD = 8;
         final String HASH = "682ba2316eec5c1568f077b4065e818fd3f693cb340657e8c70d19501fac5c49";
         String[] letras = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t",
                 "u", "v", "w", "x", "y", "z"};

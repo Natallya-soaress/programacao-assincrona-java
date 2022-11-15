@@ -1,9 +1,11 @@
 import java.security.MessageDigest;
+import java.util.concurrent.CompletableFuture;
 
 public class WorkerThreadSenha implements Runnable{
 
     private String HASH;
     private String letra;
+
 String[] letras = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t",
                     "u", "v", "w", "x", "y", "z"};
 
@@ -14,9 +16,6 @@ String[] letras = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "
 
     @Override
     public void run() {
-
-        String nome = Thread.currentThread().getName();
-        System.out.println("Thread: " + nome);
 
         String palavra = new String();
         int i = 0;
@@ -45,9 +44,21 @@ String[] letras = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "
     }
 
     private void Crack(int i, int j, int k, int l, String palavra) throws Exception {
+
         palavra = letra + letras[i] + letras[j] + letras[k] + letras[l];
-        System.out.println(palavra);
-        String hash = GerarHash(palavra);
+
+        String finalPalavra = palavra;
+
+        CompletableFuture<String> completableFuture = CompletableFuture.supplyAsync(() -> finalPalavra).thenApply(pal -> {
+            try {
+                return GerarHash(pal);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        });
+
+        String hash = completableFuture.get();
+
         if (HASH.equals(hash)) {
             System.out.println("A palavra é: " + palavra);
         } else {
