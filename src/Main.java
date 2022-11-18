@@ -7,9 +7,9 @@ import java.util.concurrent.atomic.AtomicInteger;
 public class Main {
 
     public static void main(String[] args) throws Exception {
-        //MultiplicacaoMatriz();
+        MultiplicacaoMatriz();
         //Somador();
-        QuebraSenha();
+        //QuebraSenha();
     }
 
     private static void Somador() {
@@ -33,7 +33,7 @@ public class Main {
 
     }
 
-    private static void QuebraSenha() throws Exception {
+    private static void QuebraSenha(){
 
         int i =0, j = 0;
         final int NUMERO_DE_THREAD = 8;
@@ -44,24 +44,19 @@ public class Main {
         ExecutorService threadPool = Executors.newFixedThreadPool(NUMERO_DE_THREAD);
 
         while(i < letras.length){
-            threadPool.execute(new WorkerThreadSenha(HASH, letras[i]));
+            threadPool.execute(new WorkerThreadSenha(HASH, letras[i], threadPool));
             i++;
-            j= ++j % NUMERO_DE_THREAD;
+            j = ++j % NUMERO_DE_THREAD;
         }
-
-
     }
 
     private static void MultiplicacaoMatriz() throws InterruptedException {
 
         final int NUMERO_DE_THREAD = 10;
         int resultado[][] = new int[100][100];
-        int a[][] = new int[100][100];
-        int b[][] = new int[100][100];
+        int a[][] = GeraMatriz(100, 100);
+        int b[][] = GeraMatriz(100, 100);
         int checagem[][] = new int[100][100];
-
-        a = GeraMatriz(100, 100);
-        b = GeraMatriz(100, 100);
 
         ExecutorService threadPool = Executors.newFixedThreadPool(NUMERO_DE_THREAD);
 
@@ -85,7 +80,6 @@ public class Main {
             for(int k = 0; k < coluna ; k++){
                 m[i][k] = generator.nextInt( 10 );
             }
-
         }
         return m;
     }
@@ -105,7 +99,7 @@ public class Main {
             for (int coluna = 0; coluna < matriz[0].length; coluna++) {
                 if(matriz[linha][coluna] == 0){
                     System.out.println("Ops, a multiplicação deu errado!!");
-                    break;
+                    return;
                 }
             }
         }
