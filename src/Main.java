@@ -35,7 +35,7 @@ public class Main {
 
     private static void QuebraSenha(){
 
-        int i =0, j = 0;
+        int i =0;
         final int NUMERO_DE_THREAD = 8;
         final String HASH = "682ba2316eec5c1568f077b4065e818fd3f693cb340657e8c70d19501fac5c49";
         String[] letras = {"a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m", "n", "o", "p", "q", "r", "s", "t",
@@ -46,7 +46,6 @@ public class Main {
         while(i < letras.length){
             threadPool.execute(new WorkerThreadSenha(HASH, letras[i], threadPool));
             i++;
-            j = ++j % NUMERO_DE_THREAD;
         }
     }
 
